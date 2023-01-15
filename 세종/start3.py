@@ -4,7 +4,7 @@ hwp=win32.gencache.EnsureDispatch("hwpframe.hwpobject")
 class mod_hwp:
     def __init__(self):
         hwp.XHwpWindows.Item(0).Visible=True
-        hwp.RegisterModule("FilePathCheckDLL", "filemodule")
+        hwp.RegisterModule("FilePathCheckDLL", "hwpCtrlModule")
 
     def open(self,name):
         position=f"C:\\Users\\xkr04\\OneDrive\\바탕 화면\\코딩\\hwp\\{name}.hwp"
