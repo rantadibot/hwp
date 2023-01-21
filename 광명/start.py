@@ -1,7 +1,7 @@
 import win32com.client as win32
 hwp=win32.gencache.EnsureDispatch("hwpframe.hwpobject")
 hwp.RegisterModule("FilePathCheckDLL", "hwpCtrlModule")
-hwp.XHwpWindows.Item(0).Visible = True
+hwp.XHwpWindows.Item(0).Visible = False
 class mod_hwp:
     def __init__(self):
             self
