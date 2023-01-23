@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication,QPushButton,QMainWindow
+from PySide6.QtWidgets import QApplication,QMainWindow
 from PySide6.QtWidgets import QLabel,QLineEdit,QVBoxLayout,QWidget
 
 class MainWindow(QMainWindow):
@@ -15,8 +15,10 @@ class MainWindow(QMainWindow):
         container=QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
+        self.setFixedSize(400, 100)
 
 app=QApplication()
+app.setStyle('Fusion')
 window=MainWindow()
 window.show()
 app.exec()
