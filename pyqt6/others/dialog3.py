@@ -1,7 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout
 
-
 class MyApp(QWidget):
 
     def __init__(self):
