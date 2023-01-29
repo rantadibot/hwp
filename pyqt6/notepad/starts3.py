@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import QCoreApplication,QDate,QTime,Qt
 from PySide6.QtGui import QIcon
+from finds3 import findWindow
 
 class MyWidget(QWidget):
     def __init__(self):
@@ -17,10 +18,11 @@ class myapp(QMainWindow):
         super().__init__()
         self.fontSize = 15
         self.setWindowIcon(QIcon(r'C:\Users\user\Desktop\새 폴더\기재부\a.png'))
-        self.setWindowTitle("visual studio code")
+        self.setWindowTitle("Windows 메모장")
         self.windows = []
         self.statusBar()
-        
+        self.setWindowFlags(Qt.WindowTitleHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint| Qt.WindowCloseButtonHint)
+
         self.opend=False
         self.opend_file_path='제목없음'
         self.dialog=QDialog()
@@ -39,25 +41,30 @@ class myapp(QMainWindow):
         self.file_menu = menubar.addMenu(name)
         self.file_menu.setTitle(QCoreApplication.translate("MainWindow", f"{name}(&{key})", None))
 
-    def add_submenu(self,name):       
+    def add_menu2(self,name,key):       
         self.add=self.file_menu.addMenu(name)
+        self.add.setTitle(QCoreApplication.translate("MainWindow", f"{name}(&{key})", None))
                    
-    def add_act(self,act_name,act_fun=None):
+    def add_act(self,act_name,act_key,act_fun=None):
        self.act=self.file_menu.addAction(act_name)
+       self.act.setText(QCoreApplication.translate("MainWindow", f"{act_name}(&{act_key})", None))
        self.act.triggered.connect(act_fun)
 
-    def add_act_short(self,act_name,act_short,act_fun=None):
+    def add_act_short(self,act_name,act_key,act_short,act_fun=None):
        self.act=self.file_menu.addAction(act_name)
+       self.act.setText(QCoreApplication.translate("MainWindow", f"{act_name}(&{act_key})", None))
        self.act.setShortcut(act_short)
        self.act.triggered.connect(act_fun)
                      
-    def add_act_ctrl(self,act_name,act_short,act_fun=None):
+    def add_act_ctrl(self,act_name,act_key,act_short,act_fun=None):
        self.act=self.file_menu.addAction(act_name)
+       self.act.setText(QCoreApplication.translate("MainWindow", f"{act_name}(&{act_key})", None))
        self.act.setShortcut(f'Ctrl+{act_short}')
        self.act.triggered.connect(act_fun)
                  
-    def add_act_ctrl2(self,act_name,act_short,act_fun=None):
+    def add_act_ctrl2(self,act_name,act_key,act_short,act_fun=None):
        self.act=self.add.addAction(act_name)
+       self.act.setText(QCoreApplication.translate("MainWindow", f"{act_name}(&{act_key})", None))
        self.act.setShortcut(f'Ctrl+{act_short}')
        self.act.triggered.connect(act_fun)
                     
@@ -66,114 +73,57 @@ class myapp(QMainWindow):
        self.act.setText(QCoreApplication.translate("MainWindow", f"{act_name}(&{act_key})", None))
        self.act.setShortcut(f'Ctrl+Shift+{act_short}')
        self.act.triggered.connect(act_fun)
-
-    def add_act_shift2(self,act_name,act_short,act_fun=None):
-       self.act=self.file_menu.addAction(act_name)
-       self.act.setShortcut(f'Ctrl+Shift+{act_short}')
-       self.act.triggered.connect(act_fun)
        
     def add_sep(self):
         self.file_menu.addSeparator()
 
     def make_menu(self):
         self.add_menu('파일','F')
-        self.add_act_ctrl('새 텍스트 파일','N')
-        self.add_act('새 파일')
-        self.add_act_shift2('새 창','N')
+        self.add_act_ctrl('새로 만들기','N','N')
+        self.add_act_shift('새 창','W','N',self.add_window)
+        self.add_act_ctrl('열기','O','O',self.open_file)
+        self.add_act_ctrl('저장','S','S',self.save_file)
+        self.add_act_shift('다른 이름으로 저장','A','S',self.saveas_file)
         self.add_sep()
-
-        self.add_act_ctrl('파일 열기','O',self.open_file)
-        self.add_act_ctrl('폴더 열기','S',self.save_file)
-        self.add_act('파일 영역에서 작업영역 열기')
-        self.add_submenu('최근 항목 열기') 
+        self.add_act('페이지 설정','U')
+        self.add_act_ctrl('인쇄','P','P')
         self.add_sep()
-
-        self.add_act('작업영역에 폴더 추가')
-        self.add_sep()
-
-        self.add_act_ctrl('저장','S',self.save_file)
-        self.add_act_shift2('다른 이름으로 저장','S')
-        self.add_act_ctrl('모두저장','K S',self.save_file)
-        self.add_sep()
-
-        self.add_submenu('공유') 
-        self.add_sep()
-
-        self.add_act('자동저장')
-        self.add_submenu('기본 설정') 
-        self.add_sep()
-
-        self.add_act('파일 되돌리기')
-        self.add_act_ctrl('편집기 닫기','F4',self.save_file)
-        self.add_act_ctrl('폴더닫기','K F')
-        self.add_act_ctrl('창닫기','K S',self.save_file)
-        self.add_sep()
-
-        self.add_act('끝내기',self.exit)
+        self.add_act('끝내기','X',self.exit)
         
-        self.add_menu('편집','E')
-        self.add_act_ctrl('실행 취소','Z',self.undo)
-        self.add_act_ctrl('다시 실행','Y',self.undo)
+        self.add_menu('편집','U')
+        self.add_act_ctrl('실행 취소','T','Z',self.undo)
         self.add_sep()
-        self.add_act_ctrl('잘라내기','X',self.cut)
-        self.add_act_ctrl('복사','C',self.copy)
-        self.add_act_ctrl('붙여넣기','P',self.paste)
+        self.add_act_ctrl('잘라내기','X','X',self.cut)
+        self.add_act_ctrl('복사','C','C',self.copy)
+        self.add_act_ctrl('붙여넣기','P','V',self.paste)
+        self.add_act_short('삭제','L','Del',self.clear)
         self.add_sep()
-
-        self.add_act_ctrl('찾기','F',self.find)
-        self.add_act_ctrl('바꾸기','H')
+        self.add_act_ctrl('Bing으로 검색','S','E')
+        self.add_act_ctrl('찾기','T','F',findWindow.find)
+        self.add_act_short('다음 찾기','F','F3')
+        self.add_act_short('이전 찾기','N','Shift+F3')
+        self.add_act_ctrl('바꾸기','R','H')
+        self.add_act_ctrl('이동','G','G')
         self.add_sep()
-
-        self.add_act_shift2('파일에서 찾기','F')
-        self.add_act_shift2('파일에서 바꾸기','H')
-        self.add_sep()
-
-        self.add_act_ctrl('줄 주석 설정/해제','/')
-        self.add_act_ctrl('블록 주석 설정/해제','G')
-        self.add_act_short('Emmet : 약어 확장','Tab')
+        self.add_act_ctrl('모두 선택','A','A')
+        self.add_act_short('시간/날짜','D','F5',self.getTime)
         
-        self.add_menu('선택 영역','S')
-        self.add_act('자동 줄바꿈')
-        self.add_act('글꼴')
+        self.add_menu('서식','O')
+        self.add_act('자동 줄바꿈','W')
+        self.add_act('글꼴','F')
         
         self.add_menu('보기','V')
-        self.add_act_shift2('명령 팔레트','P')
-        self.add_act('뷰 열기')
-        self.add_sep()
-
-        self.add_submenu('모양')
-        self.add_submenu('편집기 레이아웃')
-        self.add_sep()
-
-        self.add_act_shift2('탐색기','E')
-        self.add_act_shift2('검색','F')
-        self.add_act_shift2('소스제어','G')
-
-        self.add_act('상태 표시줄')
-
-        self.add_menu('이동','G')
-        self.add_act('도움말 보기')
-        self.add_act('피드백 보내기')
-        self.add_sep()
-        self.add_act('메모장 정보')
-
-        self.add_menu('실행','R')
-        self.add_act('도움말 보기')
-        self.add_act('피드백 보내기')
-        self.add_sep()
-        self.add_act('메모장 정보')
-
-        self.add_menu('터미널','T')
-        self.add_act('도움말 보기')
-        self.add_act('피드백 보내기')
-        self.add_sep()
-        self.add_act('메모장 정보')
+        self.add_menu2('확대하기/ 축소하기','S')
+        self.add_act_ctrl2('확대','I','+',self.fontSizeUp)
+        self.add_act_ctrl2('축소','O','-',self.fontSizeDown)
+        self.add_act_ctrl2('확대하기/ 축소하기 기본값 복원','O',0,self.fontSizeReturn)
+        self.add_act('상태 표시줄','S')
 
         self.add_menu('도움말','H')
-        self.add_act('도움말 보기')
-        self.add_act('피드백 보내기')
+        self.add_act('도움말 보기','H')
+        self.add_act('피드백 보내기','F')
         self.add_sep()
-        self.add_act('메모장 정보')
+        self.add_act('메모장 정보','A')
 
     def save_changed_data(self):
        msgBox=QMessageBox()
@@ -256,14 +206,4 @@ class myapp(QMainWindow):
     def paste(self):
         self.texts.paste()    
 
-    def find(self):
-        self.le = QTextEdit()
-        self.dialog.setWindowTitle("찾기")
-        self.dialog.setWindowModality(Qt.ApplicationModal)
-        self.dialog.resize(300,200)
-        btn_ok=QPushButton("찾기",self.dialog)
-        btn_no=QPushButton("취소",self.dialog)
-        btn_no.clicked.connect(self.dialog.close)
-        self.dialog
-        self.dialog.show()
 

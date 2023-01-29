@@ -10,16 +10,16 @@ class MyApps(QWidget):
         high_box=QVBoxLayout()
 
         hbox0 = QHBoxLayout()
-        a=QLineEdit()
-        a.setPlaceholderText('한글 2018')
-        hbox0.addWidget(a)
+        hbox0.addWidget(QLineEdit('한글 2018'))
+
     
         vbox1 = QGridLayout()
-        vbox1.addWidget(QLabel('파일 형식 : '),0,0,1,1)
-        vbox1.addWidget(QLabel('바로 가기(.lnk)'),0,1,1,1)
-        vbox1.addWidget(QLabel('설명 : '),1,0,1,1)
-        vbox1.addWidget(QLabel('HWP 2018'),1,1,1,1)
-        vbox1.addWidget(QHLine(),2,0,1,2)
+        vbox1.addWidget(QHLine(),0,0,1,2)
+        vbox1.addWidget(QLabel('파일 형식 : '),1,0,1,1)
+        vbox1.addWidget(QLabel('바로 가기(.lnk)'),1,1,1,1)
+        vbox1.addWidget(QLabel('설명 : '),2,0,1,1)
+        vbox1.addWidget(QLabel('HWP 2018'),2,1,1,1)
+        vbox1.addWidget(QHLine(),3,0,1,2)
         
         vbox2 = QGridLayout()
 
@@ -33,12 +33,12 @@ class MyApps(QWidget):
 
         vbox3 = QGridLayout()
 
-        vbox3.addWidget(QLabel('만든 날짜'),0,0,1,1)
-        vbox3.addWidget(QLabel('2020년 2월 14일 금요일'),0,1,1,1)
-        vbox3.addWidget(QLabel('수정한 날짜'),1,0,1,1)
-        vbox3.addWidget(QLabel('1.37KB (1,413 바이트)'),1,1,1,1)
-        vbox3.addWidget(QLabel('액세스한 날짜'),2,0,1,1)
-        vbox3.addWidget(QLabel('4.00KB (4,096 바이트)'),2,1,1,1)
+        vbox3.addWidget(QLabel('만든 날짜 : '),0,0,1,1)
+        vbox3.addWidget(QLabel('2020년 2월 14일 금요일, 오후 11:11:28'),0,1,1,1)
+        vbox3.addWidget(QLabel('수정한 날짜 : '),1,0,1,1)
+        vbox3.addWidget(QLabel('2020년 2월 14일 금요일, 오후 11:11:28'),1,1,1,1)
+        vbox3.addWidget(QLabel('액세스한 날짜 : '),2,0,1,1)
+        vbox3.addWidget(QLabel('2023년 1월 29일 오늘, 14시간 전'),2,1,1,1)
         vbox3.addWidget(QHLine(),3,0,1,2)
 
         vbox4 = QGridLayout()

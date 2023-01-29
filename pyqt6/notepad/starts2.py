@@ -21,7 +21,8 @@ class myapp(QMainWindow):
         self.setWindowTitle("Windows 메모장")
         self.windows = []
         self.statusBar()
-        
+        self.setWindowFlags(Qt.WindowTitleHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint| Qt.WindowCloseButtonHint)
+
         self.opend=False
         self.opend_file_path='제목없음'
         self.dialog=QDialog()
